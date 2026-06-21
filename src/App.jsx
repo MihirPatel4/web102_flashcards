@@ -4,7 +4,7 @@ import Card from './components/Card'
 const flashcards = [
     {
       "question": "What type of minerals are iron/magnesium-bearing, such as augite, hornblende, olivine, or biotite?",
-      "answer": "Ferrgomagnesian"
+      "answer": "Ferromagnesian"
     },
     {
       "question": "What is a dark, dense, igneous rock with a fine texture, found in oceanic crust?",
@@ -32,7 +32,7 @@ const flashcards = [
     },
     {
       "question": "What type of rock was previously igneous or sedimentary rock, but changed as a result of great temperature and pressure?",
-      "answer": "Metamorphic"
+      "answer": "Metamorphic rock"
     },
     {
       "question": "What is igneous rock that forms when magma hardens beneath Earth's surface?",
@@ -79,22 +79,81 @@ function shuffleArray(array) {
 }
 
 function App() {
-  const [shuffledCards] = useState(() => shuffleArray(flashcards));
+  const [currentCardSet, setCardSet] = useState(flashcards);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [guessResult, setGuessResult] = useState("");
+  const [currentInput, setCurrentInput] = useState("");
+  const [prevButtonStatus, setPrevButtonStatus] = useState("disabled");
+  const [nextButtonStatus, setNextButtonStatus] = useState("");
 
-  const currentCard = shuffledCards[currentIndex];
+  const currentCard = currentCardSet[currentIndex];
 
   const handleNext = () => {
-    setCurrentIndex((currentIndex + 1) % shuffledCards.length);
-  }
+    if (currentIndex < currentCardSet.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setPrevButtonStatus("");
+    }
+
+    if (currentIndex === currentCardSet.length - 2) {
+      setNextButtonStatus("disabled");
+    }
+
+    setGuessResult("");
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      setNextButtonStatus("");
+    }
+
+    if (currentIndex === 1) {
+      setPrevButtonStatus("disabled");
+    }
+
+    setGuessResult("");
+  };
+
+  const handleShuffle = () => {
+    setCardSet(shuffleArray(flashcards));
+    setCurrentIndex(0);
+    setGuessResult("");
+    setCurrentInput("");
+    setPrevButtonStatus("disabled");
+    setNextButtonStatus("");
+  };
+
+  const handleChange = (e) => {
+    setCurrentInput((currentInput) => (e.target.value));
+  };
+
+  const handleGuess = () => {
+    console.log(currentInput);
+    if (currentInput === currentCardSet[currentIndex].answer) {
+      setGuessResult("correct");
+    }
+    else {
+      setGuessResult("incorrect");
+    }
+
+    setCurrentInput("");
+  };
 
   return (
     <div className="App">
       <h2>Basic Geology Study Guide</h2>
       <h3>Test your Geology 101 knowledge with some common term definitions!</h3>
-      <p>Total Cards: {shuffledCards.length}</p>
-      <Card key={currentIndex} question={currentCard.question} answer={currentCard.answer} />
-      <button className="next-button" onClick={handleNext}>Next Card</button>
+      <p>Total Cards: {currentCardSet.length}</p>
+      <Card key={currentIndex} question={currentCard.question} answer={currentCard.answer} result={guessResult} />
+      <div className="guess">
+        <input className="guess-input" type="text" name="guess-input" placeholder="Guess the answer..." onChange={handleChange}/>
+        <button className="guess-button" onClick={handleGuess}>Guess</button>
+      </div>
+      <div className="traverse-cards">
+        <button className={`button ${prevButtonStatus}`} onClick={handlePrev}>Previous</button>
+        <button className={`button ${nextButtonStatus}`} onClick={handleNext}>Next</button>
+        <button className="button" onClick={handleShuffle}>Shuffle</button>
+      </div>
     </div>
   );
 }
