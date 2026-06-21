@@ -9,11 +9,11 @@ const Card = (props) => {
 
     return (
         <div id="Card" onClick={handleFlip} className={flipped ? "flipped" : ""}>
-            <div className="card-face front">
+            <div className={`card-face front ${props.result}`}>
                 <h4>Question:</h4>
                 <p>{props.question}</p>
             </div>
-            <div className="card-face back">
+            <div className={`card-face back ${props.result}`}>
                 <h4>Answer:</h4>
                 <p>{props.answer}</p>
             </div>
