@@ -101,6 +101,6 @@ h2 {
 }
 
 .disabled {
-    background-color: rgb(155, 182, 207);
+    background-color: rgb(199, 199, 199);
     cursor: default;
 }
