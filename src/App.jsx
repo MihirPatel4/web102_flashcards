@@ -128,7 +128,6 @@ function App() {
   };
 
   const handleGuess = () => {
-    console.log(currentInput);
     if (currentInput === currentCardSet[currentIndex].answer) {
       setGuessResult("correct");
     }
@@ -146,7 +145,7 @@ function App() {
       <p>{`Card ${currentIndex + 1} of ${currentCardSet.length}`}</p>
       <Card key={currentIndex} question={currentCard.question} answer={currentCard.answer} result={guessResult} />
       <div className="guess">
-        <input className="guess-input" type="text" name="guess-input" placeholder="Guess the answer..." onChange={handleChange}/>
+        <input className="guess-input" type="text" name="guess-input" placeholder="Guess the answer..." onChange={handleChange} value={currentInput}/>
         <button className="guess-button" onClick={handleGuess}>Guess</button>
       </div>
       <div className="traverse-cards">
