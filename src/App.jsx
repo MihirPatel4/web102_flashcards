@@ -143,7 +143,7 @@ function App() {
     <div className="App">
       <h2>Basic Geology Study Guide</h2>
       <h3>Test your Geology 101 knowledge with some common term definitions!</h3>
-      <p>Total Cards: {currentCardSet.length}</p>
+      <p>{`Card ${currentIndex + 1} of ${currentCardSet.length}`}</p>
       <Card key={currentIndex} question={currentCard.question} answer={currentCard.answer} result={guessResult} />
       <div className="guess">
         <input className="guess-input" type="text" name="guess-input" placeholder="Guess the answer..." onChange={handleChange}/>
