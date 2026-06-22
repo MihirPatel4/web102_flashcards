@@ -83,8 +83,6 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [guessResult, setGuessResult] = useState("");
   const [currentInput, setCurrentInput] = useState("");
-  const [prevButtonStatus, setPrevButtonStatus] = useState("disabled");
-  const [nextButtonStatus, setNextButtonStatus] = useState("");
 
   const currentCard = currentCardSet[currentIndex];
 
@@ -92,10 +90,6 @@ function App() {
     if (currentIndex < currentCardSet.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setPrevButtonStatus("");
-    }
-
-    if (currentIndex === currentCardSet.length - 2) {
-      setNextButtonStatus("disabled");
     }
 
     setGuessResult("");
@@ -107,10 +101,6 @@ function App() {
       setNextButtonStatus("");
     }
 
-    if (currentIndex === 1) {
-      setPrevButtonStatus("disabled");
-    }
-
     setGuessResult("");
   };
 
@@ -119,8 +109,6 @@ function App() {
     setCurrentIndex(0);
     setGuessResult("");
     setCurrentInput("");
-    setPrevButtonStatus("disabled");
-    setNextButtonStatus("");
   };
 
   const handleChange = (e) => {
@@ -149,8 +137,8 @@ function App() {
         <button className="guess-button" onClick={handleGuess}>Guess</button>
       </div>
       <div className="traverse-cards">
-        <button className={`button ${prevButtonStatus}`} onClick={handlePrev}>Previous</button>
-        <button className={`button ${nextButtonStatus}`} onClick={handleNext}>Next</button>
+        <button className="button" onClick={handlePrev} disabled={currentIndex === 0}>Previous</button>
+        <button className="button" onClick={handleNext} disabled={currentIndex === currentCardSet.length - 1}>Next</button>
         <button className="button" onClick={handleShuffle}>Shuffle</button>
       </div>
     </div>

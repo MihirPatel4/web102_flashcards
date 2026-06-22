@@ -100,7 +100,7 @@ h2 {
     border: 2px solid red;
 }
 
-.disabled {
+.button:disabled {
     background-color: rgb(199, 199, 199);
     cursor: default;
 }
